@@ -2,6 +2,8 @@ This code is developed under the Pycharm IDE and use conda for package managemen
 Before running the code, please install opencv-python-headless and ultralytics.
 You can find the code for installation at https://anaconda.org/fastai/opencv-python-headless and https://docs.ultralytics.com/zh/guides/conda-quickstart/.
 After that, please check you computer's CUDA version and install the correct Pytorch version at https://pytorch.org/get-started/locally/.
+Dataset is from https://www.kaggle.com/datasets/ahmedsorour1/mri-for-brain-tumor-with-bounding-boxes/code MRI for Brain Tumor with Bounding Boxes
+MRI Images for Brain Tumors For Object Detection or Classification by Ahmed Sorour1 (2024)
 
 
 #Function and changes
