@@ -15,3 +15,4 @@ The Updated_taskfilecode.py contain the updated code in task.py in the ultralyti
 There is a Trained_model folder holding YOLOv8 to YOLOv12 and our customized YOLOv10CM trained model.
 
 
+

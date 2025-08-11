@@ -5,11 +5,11 @@ import torch
 import torch.nn as nn
 from torch.nn import init
 
-#Title:YOLOv8融合BiFPN网络，亲测显著涨点！
-#Author:AI棒棒牛
-#Date:2024-03-14 17:34:17
-#Type: source code
-#Availability:https://blog.csdn.net/weixin_51692073/article/details/132594602?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-1-132594602-blog-137468547.235^v43^pc_blog_bottom_relevance_base2&spm=1001.2101.3001.4242.2&utm_relevant_index=3
+# Title:YOLOv8融合BiFPN网络，亲测显著涨点！
+# Author:AI棒棒牛
+# Date:2024-03-14 17:34:17
+# Type: source code
+# Availability:https://blog.csdn.net/weixin_51692073/article/details/132594602?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-1-132594602-blog-137468547.235^v43^pc_blog_bottom_relevance_base2&spm=1001.2101.3001.4242.2&utm_relevant_index=3
 
 class BiFPN(nn.Module):
     def __init__(self, dimension=1):

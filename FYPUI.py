@@ -5,7 +5,7 @@ from ultralytics import YOLO
 from PIL import Image, ImageDraw, ImageFont # for drawing bounding boxes and labels on the image.
 
 # Load our trained YOLOv10_CBAM model
-model = YOLO("D:\downloads\FYPcode\Trained_model\YOLOv10CM_FYPtrained.pt")  # update the path of the trained model
+model = YOLO(r"D:\fyp\fypcode\Trained_model\YOLOv10CM_FYPtrained.pt")  # update the path of the trained model
 
 # Store brain tumor classes into class_name
 class_names = ["Glioma", "Meningioma", "No Tumor", "Pituitary"]
