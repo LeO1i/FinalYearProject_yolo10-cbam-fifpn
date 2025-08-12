@@ -52,8 +52,7 @@ gradio FYPUI.py
 ## 🌐 Accessing the Interface
 
 Once launched, the interface will be available at:
-- **Local**: http://localhost:7860
-- **Public**: A public URL will be provided in the terminal output
+
 
 ## 📖 How to Use
 
