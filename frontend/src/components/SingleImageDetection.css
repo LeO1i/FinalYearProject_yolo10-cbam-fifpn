@@ -1,0 +1,261 @@
+.single-detection {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.single-detection h2 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.controls {
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.file-input-group {
+  margin-bottom: 1rem;
+}
+
+.file-label {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background: #646cff;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.file-label:hover {
+  background: #535bf2;
+}
+
+.file-input-group input[type="file"] {
+  display: none;
+}
+
+.file-name {
+  margin-left: 1rem;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.confidence-slider {
+  margin-bottom: 1.5rem;
+}
+
+.confidence-slider label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.confidence-slider input[type="range"] {
+  width: 100%;
+  max-width: 400px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: #646cff;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #535bf2;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.btn-secondary:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.error-message {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px solid #f5c6cb;
+  margin-bottom: 1rem;
+}
+
+.results-container {
+  margin-top: 2rem;
+}
+
+.image-comparison {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.image-box {
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+  background: white;
+}
+
+.image-box h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.image-box img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  display: block;
+}
+
+.download-link {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: #28a745;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.download-link:hover {
+  background: #218838;
+}
+
+.detections-list {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.detections-list h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.detections-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.detections-table th,
+.detections-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.detections-table th {
+  background: #f8f9fa;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.detections-table tr:hover {
+  background: #f8f9fa;
+}
+
+.label {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.label-glioma {
+  background: #ffeaa7;
+  color: #d63031;
+}
+
+.label-meningioma {
+  background: #dfe6e9;
+  color: #2d3436;
+}
+
+.label-no-tumor {
+  background: #55efc4;
+  color: #00b894;
+}
+
+.label-pituitary {
+  background: #a29bfe;
+  color: #6c5ce7;
+}
+
+.bbox-coords {
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.no-detections {
+  background: #d1ecf1;
+  color: #0c5460;
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px solid #bee5eb;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .image-comparison {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .btn-primary, .btn-secondary {
+    width: 100%;
+  }
+}
+

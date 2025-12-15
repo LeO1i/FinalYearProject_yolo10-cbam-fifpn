@@ -1,4 +1,71 @@
-dataset.yaml
-modelEval.py
-Updated_taskfilecode.py
-yolo11n.pt
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+
+# Gradio (removed, kept for reference)
+.gradio/
+
+# Training outputs
+training/__pycache__/
+training/runs/
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Model checkpoints (keep the trained models but ignore training runs)
+runs/
+weights/
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+temp/
+tmp/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/.vite/
+frontend/*.local
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Dataset (if large)
+# Uncomment if you don't want to commit dataset
+# dataset/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/

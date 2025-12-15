@@ -7,72 +7,42 @@ This script allows processing multiple images from the command line.
 import os
 import sys
 import argparse
-import cv2
-import numpy as np
-from ultralytics import YOLO
-from PIL import Image, ImageDraw, ImageFont
 import json
 from datetime import datetime
+from pathlib import Path
 
-# Load the trained model
-model = YOLO(r"D:\fyp\fypcode\Trained_model\YOLOv10CM_FYPtrained.pt")
+# Add backend to path for imports
+PROJECT_ROOT = Path(__file__).parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
 
-# Brain tumor classes
-class_names = ["Glioma", "Meningioma", "No Tumor", "Pituitary"]
+# Add training directory to path for custom modules (CBAM, BiFPN)
+# This is needed for loading models trained with custom modules
+training_dir = PROJECT_ROOT / "training"
+if str(training_dir) not in sys.path:
+    sys.path.insert(0, str(training_dir))
+
+from backend.app.inference import load_model, process_image_from_file
+from backend.app.config import CLASS_NAMES, get_model_path
+
+# Load the trained model once
+model = load_model()
 
 def process_single_image(image_path, output_dir, confidence_threshold=0.5):
     """
-    Process a single image and save the result
+    Process a single image and save the result using shared inference module
     """
     try:
-        # Read image
-        img = cv2.imread(image_path)
-        if img is None:
-            print(f"❌ Could not read image: {image_path}")
-            return None
-        
-        img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        
-        # Run inference
-        results = model.predict(source=img, conf=confidence_threshold)
-        
-        # Process results
-        detections = []
-        if results and len(results) and results[0].boxes is not None:
-            boxes = results[0].boxes.xyxy.cpu().numpy()
-            class_ids = results[0].boxes.cls.cpu().numpy()
-            confs = results[0].boxes.conf.cpu().numpy()
-            
-            for box, class_idz, conf in zip(boxes, class_ids, confs):
-                label = class_names[int(class_idz)]
-                detections.append({
-                    'label': label,
-                    'confidence': float(conf),
-                    'bbox': box.tolist()
-                })
-        
-        # Draw results on image
-        output_image = Image.fromarray(img_rgb)
-        draw = ImageDraw.Draw(output_image)
-        font = ImageFont.load_default()
-        
-        for detection in detections:
-            box = detection['bbox']
-            label = detection['label']
-            conf = detection['confidence']
-            
-            x1, y1, x2, y2 = map(int, box)
-            draw.rectangle([x1, y1, x2, y2], outline="red", width=3)
-            
-            text = f"{label} {conf:.2f}"
-            bbox = draw.textbbox((x1, max(0, y1 - 20)), text, font=font)
-            draw.rectangle(bbox, fill="red")
-            draw.text((x1, max(0, y1 - 20)), text, fill="white", font=font)
+        # Use shared inference module
+        annotated_image, detections = process_image_from_file(
+            image_path, 
+            confidence_threshold, 
+            model
+        )
         
         # Save result
         base_name = os.path.splitext(os.path.basename(image_path))[0]
         output_path = os.path.join(output_dir, f"detected_{base_name}.jpg")
-        output_image.save(output_path, 'JPEG', quality=95)
+        annotated_image.save(output_path, 'JPEG', quality=95)
         
         return {
             'image_path': image_path,
@@ -124,7 +94,7 @@ def process_batch(input_dir, output_dir, confidence_threshold=0.5, save_json=Tru
         if result and result['status'] == 'success':
             detections = result['detections']
             if detections:
-                print(f"   ✅ Found {len(detections)} detection(s): {', '.join([f'{d['label']} ({d['confidence']:.2f})' for d in detections])}")
+                print(f"   ✅ Found {len(detections)} detection(s): {', '.join([f\"{d['label']} ({d['confidence']:.2f})\" for d in detections])}")
             else:
                 print(f"   ⚠️  No detections found")
         else:
@@ -182,9 +152,11 @@ def main():
         sys.exit(1)
     
     # Check if model file exists
-    model_path = r"D:\fyp\fypcode\Trained_model\YOLOv10CM_FYPtrained.pt"
-    if not os.path.exists(model_path):
-        print(f"❌ Model file not found: {model_path}")
+    try:
+        model_path = get_model_path()
+        print(f"Using model: {model_path}")
+    except FileNotFoundError as e:
+        print(f"❌ {e}")
         sys.exit(1)
     
     print("🧠 Brain Tumor Detection - Batch Processor")

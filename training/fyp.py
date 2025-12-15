@@ -1,16 +1,17 @@
 import os
 import cv2
 import numpy as np
+from pathlib import Path
 from ultralytics import YOLO
 import yaml
 import torch
 
+# Get project root directory
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+DATASET_PATH = PROJECT_ROOT / "dataset"
 
-
-
-
-train_path = r"D:\fyp\fypcode\dataset\train"
-val_path = r"D:\fyp\fypcode\dataset\val"
+train_path = str(DATASET_PATH / "train")
+val_path = str(DATASET_PATH / "val")
 
 classes = ["Glioma", "Meningioma", "No Tumor", "Pituitary"]
 
@@ -49,12 +50,13 @@ def preprocess_images(images):
     return np.array(processed_images)
 
 dataset_yaml = {
-    'path': r'D:\fyp\fypcode\dataset',
+    'path': str(DATASET_PATH),
     'train': 'train',
     'val': 'val',
     'names':  classes
 }
-with open(r'D:\fyp\fypcode\dataset.yaml', 'w') as file:
+dataset_yaml_path = PROJECT_ROOT / 'dataset.yaml'
+with open(dataset_yaml_path, 'w') as file:
     yaml.dump(dataset_yaml, file)
 
 if __name__ == '__main__':
@@ -64,14 +66,16 @@ if __name__ == '__main__':
     train_images = preprocess_images(train_images)
     val_images = preprocess_images(val_images)
 
-    # Load YOLOv10b model
-    model = YOLO("yolov10n_CBAM.yaml")
-    #model = YOLO("yolov9t.yaml")
+    # Load YOLOv10 model with CBAM
+    model_config = Path(__file__).parent / "yolov10n_CBAM.yaml"
+    model = YOLO(str(model_config))
 
     # Train the model
-    #print(torch.cuda.is_available())
-    #print(torch.cuda.get_device_name(0))
-    result = model.train(data=r'D:\fyp\fypcode\dataset.yaml',
+    print(f"CUDA available: {torch.cuda.is_available()}")
+    if torch.cuda.is_available():
+        print(f"GPU: {torch.cuda.get_device_name(0)}")
+    
+    result = model.train(data=str(dataset_yaml_path),
                          epochs=10,  # Increase training to 1000
                          imgsz=640,     # Image size
                          lr0=0.001,  # Initial learning rate
@@ -86,7 +90,10 @@ if __name__ == '__main__':
                          deterministic = False,
                          )
 
-    model.save(r'D:\fyp\fypcode\FYP10v_test.pt')
+    # Save model to Trained_model directory
+    output_path = PROJECT_ROOT / 'Trained_model' / 'YOLOv10CM_FYPtrained_new.pt'
+    model.save(str(output_path))
+    print(f"\nModel saved to: {output_path}")
 
 
 
