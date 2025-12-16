@@ -17,21 +17,22 @@ if str(training_dir) not in sys.path:
 
 def check_dependencies():
     """Check if required dependencies are installed"""
-    required_packages = [
-        'fastapi',
-        'uvicorn',
-        'ultralytics', 
-        'opencv-python',
-        'PIL',
-        'numpy'
-    ]
+    # Map pip package names to their Python import names
+    package_imports = {
+        'fastapi': 'fastapi',
+        'uvicorn': 'uvicorn',
+        'ultralytics': 'ultralytics',
+        'opencv-python': 'cv2',  # opencv-python is imported as cv2
+        'PIL': 'PIL',  # Pillow is imported as PIL
+        'numpy': 'numpy'
+    }
     
     missing_packages = []
-    for package in required_packages:
+    for package_name, import_name in package_imports.items():
         try:
-            __import__(package.replace('-', '_').replace('PIL', 'PIL'))
+            __import__(import_name)
         except ImportError:
-            missing_packages.append(package)
+            missing_packages.append(package_name)
     
     if missing_packages:
         print(f"❌ Missing required packages: {', '.join(missing_packages)}")
